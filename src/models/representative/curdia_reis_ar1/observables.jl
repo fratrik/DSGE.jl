@@ -1,4 +1,4 @@
-function init_observable_mappings!(m::AnSchorfheide)
+function init_observable_mappings!(m::CurdiaReis)
 
     observables = OrderedDict{Symbol,Observable}()
     population_mnemonic = get(get_setting(m, :population_mnemonic))
@@ -10,7 +10,7 @@ function init_observable_mappings!(m::AnSchorfheide)
         # FROM: Level of GDP (from FRED)
         # TO: Quarter-to-quarter percent change of real GDP per capita
 
-        levels[!,:temp] = percapita(m, :GDP, levels)
+        levels[!,:temp] = percapita(m, :OUTNFB, levels)
         gdp = 1000 * nominal_to_real(:temp, levels)
         oneqtrpctchange(gdp)
     end

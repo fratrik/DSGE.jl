@@ -1,4 +1,4 @@
-function init_pseudo_observable_mappings!(m::AnSchorfheide)
+function init_pseudo_observable_mappings!(m::CurdiaReis)
 
     pseudo_names = [:y_t, :π_t, :z_t, :NominalFFR, :RealFFR]
 

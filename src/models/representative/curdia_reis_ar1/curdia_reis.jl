@@ -1,9 +1,9 @@
 """
 ```
-AnSchorfheide{T} <: AbstractRepModel{T}
+CurdiaReis{T} <: AbstractRepModel{T}
 ```
 
-The `AnSchorfheide` type defines the structure of the simple New Keynesian DSGE
+The `CurdiaReis` type defines the structure of the simple New Keynesian DSGE
 model described in 'Bayesian Estimation of DSGE Models' by Sungbae An and Frank
 Schorfheide.
 
@@ -81,7 +81,7 @@ equilibrium conditions.
   dictionary that stores names and transformations to/from model units. See
   `PseudoObservable` for further details.
 """
-mutable struct AnSchorfheide{T} <: AbstractRepModel{T}
+mutable struct CurdiaReis{T} <: AbstractRepModel{T}
     parameters::ParameterVector{T}                         # vector of all time-invariant model parameters
     steady_state::ParameterVector{T}                       # model steady-state values
     keys::OrderedDict{Symbol,Int}                          # human-readable names for all the model
@@ -106,29 +106,28 @@ mutable struct AnSchorfheide{T} <: AbstractRepModel{T}
     pseudo_observable_mappings::OrderedDict{Symbol, PseudoObservable}
 end
 
-description(m::AnSchorfheide) = "Julia implementation of model defined in 'Bayesian Estimation of DSGE Models' by Sungbae An and Frank Schorfheide: AnSchorfheide, $(m.subspec)"
+description(m::CurdiaReis) = "Julia implementation of model defined in 'Correlated Disturbances and U.S. Business Cycles' by Vasco Cúrdia and Ricardo Reis: CurdiaReis, $(m.subspec)"
 
 """
-`init_model_indices!(m::AnSchorfheide)`
+`init_model_indices!(m::CurdiaReis)`
 
 Arguments:
-`m:: AnSchorfheide`: a model object
+`m:: CurdiaReis`: a model object
 
 Description:
 Initializes indices for all of `m`'s states, shocks, and equilibrium conditions.
 """
-function init_model_indices!(m::AnSchorfheide)
+function init_model_indices!(m::CurdiaReis)
     # Endogenous states
     endogenous_states = collect([
-        :y_t, :π_t, :R_t, :y_t1, :g_t, :z_t, :Ey_t1, :Eπ_t1])
+        :y_t, :l_t, :k_t, :g_t, :a_t])
 
     # Exogenous shocks
     exogenous_shocks = collect([
-        :z_sh, :g_sh, :rm_sh])
+        :a_sh, :g_sh])
 
     # Expectations shocks
-    expected_shocks = collect([
-        :Ey_sh, :Eπ_sh])
+    expected_shocks = collect([])
 
     # Equilibrium conditions
     equilibrium_conditions = collect([
@@ -155,7 +154,7 @@ function init_model_indices!(m::AnSchorfheide)
 end
 
 
-function AnSchorfheide(subspec::String="ss0";
+function CurdiaReis(subspec::String="ss0";
                        custom_settings::Dict{Symbol, Setting} = Dict{Symbol, Setting}(),
                        testing = false)
 
@@ -167,7 +166,7 @@ function AnSchorfheide(subspec::String="ss0";
     rng                = MersenneTwister(0)
 
     # initialize empty model
-    m = AnSchorfheide{Float64}(
+    m = CurdiaReis{Float64}(
             # model parameters and steady state values
             Vector{AbstractParameter{Float64}}(), Vector{Float64}(), OrderedDict{Symbol,Int}(),
 
@@ -206,14 +205,14 @@ end
 
 """
 ```
-init_parameters!(m::AnSchorfheide)
+init_parameters!(m::CurdiaReis)
 ```
 
 Initializes the model's parameters, as well as empty values for the steady-state
 parameters (in preparation for `steadystate!(m)` being called to initialize
 those).
 """
-function init_parameters!(m::AnSchorfheide)
+function init_parameters!(m::CurdiaReis)
     # Initialize parameters
     m <= parameter(:τ, 1.9937, (1e-20, 1e5), (1e-20, 1e5), ModelConstructors.Exponential(), GammaAlt(2., 0.5), fixed=false,
                    description="τ: The inverse of the intemporal elasticity of substitution.",
@@ -282,17 +281,17 @@ end
 
 """
 ```
-steadystate!(m::AnSchorfheide)
+steadystate!(m::CurdiaReis)
 ```
 
 Calculates the model's steady-state values. `steadystate!(m)` must be called whenever
 the parameters of `m` are updated.
 """
-function steadystate!(m::AnSchorfheide)
+function steadystate!(m::CurdiaReis)
     return m
 end
 
-function model_settings!(m::AnSchorfheide)
+function model_settings!(m::CurdiaReis)
     default_settings!(m)
 
     # Data
@@ -313,7 +312,7 @@ function model_settings!(m::AnSchorfheide)
         "Value of the zero lower bound in forecast periods, if we choose to enforce it")
 end
 
-function shock_groupings(m::AnSchorfheide)
+function shock_groupings(m::CurdiaReis)
     gov = ShockGroup("g", [:g_sh], RGB(0.70, 0.13, 0.13)) # firebrick
     tfp = ShockGroup("z", [:z_sh], RGB(1.0, 0.55, 0.0)) # darkorange
     pol = ShockGroup("pol", vcat([:rm_sh], [Symbol("rm_shl$i") for i = 1:n_anticipated_shocks(m)]),

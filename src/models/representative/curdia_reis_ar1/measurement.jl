@@ -1,6 +1,6 @@
 """
 ```
-measurement(m::AnSchorfheide{T}, TTT::Matrix{T},
+measurement(m::CurdiaReis{T}, TTT::Matrix{T},
             RRR::Matrix{T}, CCC::Vector{T}) where {T<:AbstractFloat}
 ```
 
@@ -18,7 +18,7 @@ Var(u_t) = EE
 Cov(ϵ_t, u_t) = 0
 ```
 """
-function measurement(m::AnSchorfheide{T},
+function measurement(m::CurdiaReis{T},
                      TTT::Matrix{T},
                      RRR::Matrix{T},
                      CCC::Vector{T}) where {T<:AbstractFloat}

@@ -1,6 +1,6 @@
 """
 ```
-pseudo_measurement(m::AnSchorfheide{T},
+pseudo_measurement(m::CurdiaReis{T},
     TTT::Matrix{T}, RRR::Matrix{T}, CCC::Vector{T}) where {T<:AbstractFloat}
 ```
 
@@ -10,7 +10,7 @@ Assign pseudo-measurement equation (a linear combination of states):
 x_t = ZZ_pseudo*s_t + DD_pseudo
 ```
 """
-function pseudo_measurement(m::AnSchorfheide{T},
+function pseudo_measurement(m::CurdiaReis{T},
                             TTT::Matrix{T},
                             RRR::Matrix{T},
                             CCC::Vector{T}) where {T<:AbstractFloat}

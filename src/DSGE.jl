@@ -343,6 +343,15 @@ module DSGE
     include("models/representative/an_schorfheide/pseudo_measurement.jl")
     include("models/representative/an_schorfheide/augment_states.jl")
 
+    include("models/representative/an_schorfheide/curdia_reis.jl")
+    include("models/representative/an_schorfheide/subspecs.jl")
+    include("models/representative/an_schorfheide/eqcond.jl")
+    include("models/representative/an_schorfheide/observables.jl")
+    include("models/representative/an_schorfheide/measurement.jl")
+    include("models/representative/an_schorfheide/pseudo_observables.jl")
+    include("models/representative/an_schorfheide/pseudo_measurement.jl")
+    include("models/representative/an_schorfheide/augment_states.jl")
+
     # PoolModel
     include("models/poolmodel/subspecs.jl")
     include("models/poolmodel/observables.jl")
