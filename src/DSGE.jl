@@ -153,6 +153,7 @@ module DSGE
         init_parameters!, steadystate!, init_observable_mappings!,
         init_pseudo_observable_mappings!,
         Model990, Model1002, Model1010, SmetsWouters, SmetsWoutersOrig, AnSchorfheide,
+		CurdiaReis,
         PoolModel, eqcond, measurement, pseudo_measurement,
         shock_groupings, transition,
 
@@ -343,14 +344,14 @@ module DSGE
     include("models/representative/an_schorfheide/pseudo_measurement.jl")
     include("models/representative/an_schorfheide/augment_states.jl")
 
-    include("models/representative/an_schorfheide/curdia_reis.jl")
-    include("models/representative/an_schorfheide/subspecs.jl")
-    include("models/representative/an_schorfheide/eqcond.jl")
-    include("models/representative/an_schorfheide/observables.jl")
-    include("models/representative/an_schorfheide/measurement.jl")
-    include("models/representative/an_schorfheide/pseudo_observables.jl")
-    include("models/representative/an_schorfheide/pseudo_measurement.jl")
-    include("models/representative/an_schorfheide/augment_states.jl")
+    include("models/representative/curdia_reis/curdia_reis.jl")
+    include("models/representative/curdia_reis/subspecs.jl")
+    include("models/representative/curdia_reis/eqcond.jl")
+    include("models/representative/curdia_reis/observables.jl")
+    include("models/representative/curdia_reis/measurement.jl")
+    include("models/representative/curdia_reis/pseudo_observables.jl")
+    include("models/representative/curdia_reis/pseudo_measurement.jl")
+    include("models/representative/curdia_reis/augment_states.jl")
 
     # PoolModel
     include("models/poolmodel/subspecs.jl")

@@ -10,53 +10,33 @@ function init_observable_mappings!(m::CurdiaReis)
         # FROM: Level of GDP (from FRED)
         # TO: Quarter-to-quarter percent change of real GDP per capita
 
-        levels[!,:temp] = percapita(m, :OUTNFB, levels)
-        gdp = 1000 * nominal_to_real(:temp, levels)
-        oneqtrpctchange(gdp)
+        oneqtrpctchange(levels[!, :PRS85006163])
     end
 
     gdp_rev_transform = loggrowthtopct_annualized_percapita
 
-    observables[:obs_gdp] = Observable(:obs_gdp, [:GDP__FRED, population_mnemonic, :GDPDEF__FRED],
+    observables[:obs_output] = Observable(:obs_output, [:PRS85006163__FRED],
                                        gdp_fwd_transform, gdp_rev_transform,
-                                       "Real GDP Growth", "Real GDP Growth Per Capita")
+                                       "Ouput Growth", "Nonfarm Business Ouput Growth Per Capita")
 
     ############################################################################
-    ## 2. CPI Inflation
+    ## 2. Hours
     ############################################################################
 
-    cpi_fwd_transform = function (levels)
+    hours_fwd_transform = function (levels)
         # FROM: CPI urban consumers index (from FRED)
         # TO: Annualized quarter-to-quarter percent change of CPI index
+        levels[!, :temp] = percapita(m, :HOANBS, levels)
 
-        quartertoannual(oneqtrpctchange(levels[!,:CPIAUCSL]))
+        oneqtrpctchange(levels[!,:temp])
     end
 
-    cpi_rev_transform = loggrowthtopct_annualized
+    hours_rev_transform = loggrowthtopct_annualized
 
-    observables[:obs_cpi] = Observable(:obs_cpi, [:CPIAUCSL__FRED],
-                                        cpi_fwd_transform, cpi_rev_transform,
-                                        "CPI Inflation",
-                                        "CPI Inflation")
-
-    ############################################################################
-    ## 3. Nominal short-term interest rate (3 months)
-    ############################################################################
-
-    nominalrate_fwd_transform = function (levels)
-        # FROM: Nominal effective federal funds rate (aggregate daily data at a
-        #       quarterly frequency at an annual rate)
-        # TO:   Nominal effective fed funds rate, at a quarterly rate annualized
-
-        levels[!,:DFF]
-    end
-
-    nominalrate_rev_transform = identity
-
-    observables[:obs_nominalrate] = Observable(:obs_nominalrate, [:DFF__FRED],
-                                               nominalrate_fwd_transform, nominalrate_rev_transform,
-                                               "Nominal FFR",
-                                               "Nominal Effective Fed Funds Rate")
+    observables[:obs_hours] = Observable(:obs_hours, [:HOANBS__FRED, population_mnemonic],
+                                        hours_fwd_transform, hours_rev_transform,
+                                        "Hours Worked",
+                                        "Nonfarm Business Hours Per Capita")
 
     m.observable_mappings = observables
 end
