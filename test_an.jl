@@ -1,7 +1,6 @@
 using DSGE
 
-m = CurdiaReis()
-# m = AnSchorfheide()
+m = AnSchorfheide()
 
 df = load_data(m; verbose=:high)
 
