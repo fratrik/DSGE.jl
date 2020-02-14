@@ -95,7 +95,7 @@ module DSGE
         initial_draw!, ParticleCloud, Particle, estimate_bma,
 
         # backwards_compatibility.jl
-        smc2, old_to_new_cloud,# TO REMOVE
+        smc2, old_to_new_cloud, # TO REMOVE
 
         # forecast/
         load_draws, forecast_one,
@@ -150,7 +150,7 @@ module DSGE
         # models/
         init_parameters!, steadystate!, init_observable_mappings!,
         init_pseudo_observable_mappings!,
-        Model990, Model1002, Model1010, SmetsWouters, SmetsWoutersOrig, AnSchorfheide,
+        Model990, Model1002, Model1010, Model805, Model904, SmetsWouters, SmetsWoutersOrig, AnSchorfheide,
 		CurdiaReis,
         PoolModel, eqcond, measurement, pseudo_measurement,
         shock_groupings, transition,
@@ -229,12 +229,12 @@ module DSGE
     include("estimate/metropolis_hastings.jl")
 
     include("estimate/smc/particle.jl")
-    include("estimate/smc/initialization.jl")
-    include("estimate/smc/helpers.jl")
-    include("estimate/smc/util.jl")
-    include("estimate/smc/mutation.jl")
-    include("estimate/smc/resample.jl")
-    include("estimate/smc/smc.jl")
+    #include("estimate/smc/initialization.jl")
+    #include("estimate/smc/helpers.jl")
+    #include("estimate/smc/util.jl")
+    #include("estimate/smc/mutation.jl")
+    #include("estimate/smc/resample.jl")
+    #include("estimate/smc/smc.jl")
 
     include("estimate/smc.jl")
     include("estimate/backwards_compatibility.jl")
@@ -318,6 +318,22 @@ module DSGE
     include("models/representative/m1010/pseudo_observables.jl")
     include("models/representative/m1010/pseudo_measurement.jl")
     include("models/representative/m1010/augment_states.jl")
+
+    include("models/representative/m805/m805.jl")
+    include("models/representative/m805/subspecs.jl")
+    include("models/representative/m805/eqcond.jl")
+    include("models/representative/m805/observables.jl")
+    include("models/representative/m805/measurement.jl")
+    include("models/representative/m805/augment_states.jl")
+
+    include("models/representative/m904/m904.jl")
+    include("models/representative/m904/subspecs.jl")
+    include("models/representative/m904/eqcond.jl")
+    include("models/representative/m904/observables.jl")
+    include("models/representative/m904/measurement.jl")
+    include("models/representative/m904/pseudo_observables.jl")
+    include("models/representative/m904/pseudo_measurement.jl")
+    include("models/representative/m904/augment_states.jl")
 
     include("models/representative/smets_wouters/smets_wouters.jl")
     include("models/representative/smets_wouters/subspecs.jl")
